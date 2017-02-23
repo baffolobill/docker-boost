@@ -20,9 +20,10 @@ RUN apt-get update && apt-get install -y \
         wget \
         python$TARGET_PYTHON_VERSION \
         checkinstall \
-    && BOOST_VERSION_D=`echo $BOOST_VERSION | sed -e "s/\./_/g"` \
-    && BOOST_DOWNLOAD_LINK=http://sourceforge.net/projects/boost/files/boost/$BOOST_VERSION/boost_$BOOST_VERSION_D.tar.gz/download \
-    && BOOST_ROOT=/data/build/boost_$BOOST_VERSION_D \
+    && export BOOST_VERSION_D=`echo $BOOST_VERSION | sed -e "s/\./_/g"` \
+    && export BOOST_DOWNLOAD_LINK=http://sourceforge.net/projects/boost/files/boost/$BOOST_VERSION/boost_$BOOST_VERSION_D.tar.gz/download \
+    && export BOOST_ROOT=/boost_$BOOST_VERSION_D \
+    && mkdir -p "$BOOST_ROOT" \
     && wget -q -O boost-$BOOST_VERSION.tar.gz $BOOST_DOWNLOAD_LINK \
     && tar xzf boost-$BOOST_VERSION.tar.gz \
     && rm -f boost-$BOOST_VERSION.tar.gz \
