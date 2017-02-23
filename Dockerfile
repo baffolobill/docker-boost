@@ -18,7 +18,7 @@ RUN apt-get update && apt-get install -y \
         libbz2-dev \
         cmake \
         wget \
-        python$TARGET_PYTHON_VERSION \
+        python$TARGET_PYTHON_VERSION "python${TARGET_PYTHON_VERSION}-dev" \
         checkinstall \
     && export BOOST_VERSION_D=`echo $BOOST_VERSION | sed -e "s/\./_/g"` \
     && export BOOST_DOWNLOAD_LINK=http://sourceforge.net/projects/boost/files/boost/$BOOST_VERSION/boost_$BOOST_VERSION_D.tar.gz/download \
@@ -28,9 +28,9 @@ RUN apt-get update && apt-get install -y \
     && tar xzf boost-$BOOST_VERSION.tar.gz \
     && rm -f boost-$BOOST_VERSION.tar.gz \
     && cp /tmp/project-config.jam "$BOOST_ROOT/" \
-    && sed -i "s/__PYTHON_VERSION__/${TARGET_PYTHON_VERSION}/g" "$BOOST_ROOT/project-config.jam" \
+    #&& sed -i "s/__PYTHON_VERSION__/${TARGET_PYTHON_VERSION}/g" "$BOOST_ROOT/project-config.jam" \
     && cd $BOOST_ROOT \
-    && sh bootstrap.sh --prefix=/usr/local \
+    && sh bootstrap.sh --prefix=/usr/local --with-python=/usr/local/bin/python3 --with-python-version="$TARGET_PYTHON_VERSION" --with-python-root=/usr/local/lib/python"$TARGET_PYTHON_VERSION" \
     && n=`cat /proc/cpuinfo | grep "cpu cores" | uniq | awk '{print $NF}'` \
     && ./b2 --with=all -j $n install \
     && sh -c 'echo "/usr/local/lib" >> /etc/ld.so.conf.d/local.conf' \
