@@ -30,7 +30,7 @@ RUN apt-get update && apt-get install -y \
     && cp /tmp/project-config.jam "$BOOST_ROOT/" \
     #&& sed -i "s/__PYTHON_VERSION__/${TARGET_PYTHON_VERSION}/g" "$BOOST_ROOT/project-config.jam" \
     && cd $BOOST_ROOT \
-    && sh bootstrap.sh --prefix=/usr/local --with-python=/usr/local/bin/python3 --with-python-version="$TARGET_PYTHON_VERSION" --with-python-root=/usr/local/lib/python"$TARGET_PYTHON_VERSION" \
+    && sh bootstrap.sh --prefix=/usr/local --with-python=`which python$TARGET_PYTHON_VERSION` --with-python-version=$TARGET_PYTHON_VERSION --with-python-root=/usr/local/lib/python$TARGET_PYTHON_VERSION \
     && n=`cat /proc/cpuinfo | grep "cpu cores" | uniq | awk '{print $NF}'` \
     && ./b2 --with=all -j $n install \
     && sh -c 'echo "/usr/local/lib" >> /etc/ld.so.conf.d/local.conf' \
