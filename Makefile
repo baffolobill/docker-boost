@@ -1,5 +1,5 @@
 build:
-	docker build -t baffolobill/boost_debian:jessie -t registry.gitlab.com/baffolobill/boost .
+	docker build -t boost_debian:jessie -t registry.gitlab.com/baffolobill/boost .
 
 login:
 	docker login registry.gitlab.com

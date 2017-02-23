@@ -29,10 +29,10 @@ RUN apt-get update && apt-get install -y \
     && rm -f boost-$BOOST_VERSION.tar.gz \
     && cp /tmp/project-config.jam "$BOOST_ROOT/" \
     && cd $BOOST_ROOT \
-    && sh bootstrap.sh --prefix=/usr/local --with-python=`which python$TARGET_PYTHON_VERSION` --with-python-version=$TARGET_PYTHON_VERSION --with-python-root=/usr/local/lib/python$TARGET_PYTHON_VERSION \
+    && sh bootstrap.sh --prefix=/usr/local --with-python=`which python$TARGET_PYTHON_VERSION` --with-python-version=$TARGET_PYTHON_VERSION --with-python-root=/usr \
     && n=`cat /proc/cpuinfo | grep "cpu cores" | uniq | awk '{print $NF}'` \
     && ./b2 --with=all -j $n install \
-    && sh -c 'echo "/usr/local/lib" >> /etc/ld.so.conf.d/local.conf' \
+    && echo "/usr/local/lib" >> /etc/ld.so.conf.d/local.conf \
     && ldconfig \
     && apt-get autoclean \
     && apt-get clean \
