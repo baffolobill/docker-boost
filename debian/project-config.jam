@@ -15,11 +15,16 @@ if ! gcc in [ feature.values <toolset> ]
 project : default-build <toolset>gcc ;
 
 # Python configuration
-#import python ;
-#if ! [ python.configured ]
-#{
-#    using python : __PYTHON_VERSION__ : /usr ;
-#}
+import python ;
+if ! [ python.configured ]
+{
+	using python
+		: __PYTHON_VERSION__  # version
+		: /usr/bin/python__PYTHON_VERSION__  # python path 
+		: /usr/include/python__PYTHON_VERSION__m  # include path
+		: /usr/lib/python__PYTHON_VERSION__  # lib path
+		;
+}
 
 # List of --with-<library> and --without-<library>
 # options. If left empty, all libraries will be built.

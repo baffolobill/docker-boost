@@ -1,0 +1,6 @@
+using python
+	: __PYTHON_VERSION__  # version
+	: /usr/bin/python__PYTHON_VERSION__  # python path 
+	: /usr/include/python__PYTHON_VERSION__m  # include path
+	: /usr/lib/python__PYTHON_VERSION__  # lib path
+	;
