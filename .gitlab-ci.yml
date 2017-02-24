@@ -15,7 +15,9 @@ build:
     - docker login -u "gitlab-ci-token" -p "$CI_BUILD_TOKEN" registry.gitlab.com
   stage: build
   script:
-    - docker build -t $CONTAINER_TEST_IMAGE .
-    - docker push $CONTAINER_TEST_IMAGE
+    - docker build -t $CONTAINER_TEST_IMAGE:jessie ./debian/
+    - docker push $CONTAINER_TEST_IMAGE:jessie
+    - docker build -t $CONTAINER_TEST_IMAGE:xenial ./ubuntu/
+    - docker push $CONTAINER_TEST_IMAGE:xenial
   only:
     - master
